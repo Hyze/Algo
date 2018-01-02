@@ -155,6 +155,44 @@ public class Cartes {
             }
         return s;
     }
+
+    public boolean ProcheCouleur3()
+    {
+        int cpt=0;
+        boolean bool=false;
+        Cartes p= this.tri();
+        for (int i=0;i<p.getTaille();i++)
+        {
+            if(p.getCarte(i).getCouleur().equals(p.getCarte(i+1).getCouleur()))
+            {
+                cpt++;
+            }
+            if(cpt==2)
+            {
+                bool=true;
+            }
+        }
+        return bool;
+    }
+
+    public boolean ProcheCouleur4()
+    {
+        int cpt=0;
+        boolean bool=false;
+        Cartes p= this.tri();
+        for (int i=0;i<p.getTaille();i++)
+        {
+            if(p.getCarte(i).getCouleur().equals(p.getCarte(i+1).getCouleur()))
+            {
+                cpt++;
+            }
+            if(cpt==3)
+            {
+                bool=true;
+            }
+        }
+        return bool;
+    }
     
     
     
@@ -252,6 +290,11 @@ public class Cartes {
         } 
         return nombre;
     }
+
+    public  boolean ProchePaire()
+    {
+        return true;
+    }
     
     public boolean DoublePaire(){   
         boolean b = false;
@@ -281,8 +324,18 @@ public class Cartes {
             return tab;
     }
     
-    
-    
+    public boolean ProcheDoublePaire()
+    {
+        Cartes p = this.tri();
+        if(p.Paire())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
     public boolean Brelan(){
          boolean b = false;
         int cmpt = 0;
@@ -317,6 +370,18 @@ public class Cartes {
             }
         }
         return b;
+    }
+
+    public boolean ProcheBrelan()
+    {
+        Cartes p = this.tri();
+       if(p.Paire())
+       {
+           return true;
+       }
+       else {
+           return false;
+       }
     }
     
     public int BrelanChiffre(){
@@ -379,7 +444,18 @@ public class Cartes {
             return tab;
     }
     
-    
+    public boolean ProcheFull()
+    {
+        Cartes p= this.tri();
+        if(p.DoublePaire() || p.Brelan())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
     
     
     public boolean Carré(){
@@ -419,6 +495,20 @@ public class Cartes {
         
         return nombre;
     }
+
+    public boolean ProcheCarre()
+    {
+        Cartes p = this.tri();
+
+        if(p.Brelan())
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
     
     
     public boolean Suite(){
@@ -428,7 +518,7 @@ public class Cartes {
         p1 = p1.triSuiteAs();
         boolean b = false;
         int cmpt = 0;
-        for(int i=p1.getTaille()-1;i>0;i--){                 
+        for(int i=p1.getTaille()-1;i>0;i--){
             if(!(p1.getCarte(i).getNombre() == (p1.getCarte(i-1).getNombre()+1))){
                 if(!(p1.getCarte(i).getNombre() == (p1.getCarte(i-1).getNombre())))
                     cmpt = 0;
@@ -496,7 +586,23 @@ public class Cartes {
         else
             return false;
     }
-    
+
+
+    public boolean ProcheSuite()
+    {   boolean result=false;
+        Cartes p = this.tri();
+        for(int i=p.getTaille()-1;i>0;i--)
+        {
+            if(p.getCarte(i).getNombre()==p.getCarte(i-1).getNombre()+1 && p.getCarte(i-1).getNombre()+1==p.getCarte(i-2).getNombre()+1 && p.getCarte(i-2).getNombre()+1==p.getCarte(i-3).getNombre()+1)
+            {
+                result=true;
+            }
+        }
+
+        return result;
+    }
+
+
     public Carte SuiteHaute(){
         Cartes p = this.copie();
         Cartes p1 = this.copie();
@@ -599,6 +705,18 @@ public class Cartes {
         else
             return false;
     }
+
+    public boolean ProcheQuinteFlush()
+    {
+        Cartes p=this.tri();
+        if((p.ProcheSuite()||p.Suite())&&(p.ProcheCouleur4()|| p.ProcheCouleur4())){
+                return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
     
     public boolean QuinteFlushRoyal(){
         String s = CouleurNom();
@@ -614,7 +732,56 @@ public class Cartes {
         else
             return false;
     }
-    
+
+    public boolean SuiteTete()
+    {
+        int cpt=0;
+        Cartes p= this.tri();
+        for(int i=10;i<14;i++)
+        {
+            if(p.trouver(i))
+            {
+                cpt++;
+            }
+        }
+        if(cpt==4)
+        {
+            return true;
+        }
+        else
+        {
+            return false;
+        }
+    }
+
+    public boolean trouver(int num){
+        Cartes p = this.tri();
+        int i=0;
+        boolean trouver = false;
+        while (i<p.getTaille() && p.getCarte(i).getNombre()!=num)
+        {
+            i++;
+            if(p.getCarte(i).getNombre()==num)
+            {
+                trouver=true;
+            }
+
+        }
+        return trouver;
+    }
+
+    public boolean ProcheQuinteFlushRoyale()
+    {
+        Cartes p= this.tri();
+        if( SuiteTete() && (p.ProcheCouleur4() || p.Couleur()) )
+        {
+            return true ;
+        }
+        else
+        {
+            return false ;
+        }
+    }
     
     
     public Cartes tri(){

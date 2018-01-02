@@ -13,7 +13,8 @@ import java.util.ArrayList;
  */
 public class IA extends Player {
     final static String tabnom[] = {"johnny","arthur","paul","joe"}; 
-    
+
+    final static Cartes main = new Cartes();
     
     IA(ArrayList <Player> nom){
         super();
@@ -34,7 +35,7 @@ public class IA extends Player {
     
     public int proposition(int n){
         boolean b = true;
-        calculeProba();
+       // calculeProba();
         b = choix();
         if(b){
             return choixPari(n); 
@@ -45,16 +46,8 @@ public class IA extends Player {
     }
 
 
-    
-    public void calculeProba(){
 
-        for(int i=0;i<main.length;i++)
-        {
-            main[i].getNombre();
-        }
-        //a faire en utilisant la Class Cartes et ses test
-        System.out.println("Calcul des chances de gagner avec actualisation des chances par combinaison");
-    }
+
     
     public boolean choix(){
         //a faire en utilisant la Class Cartes et ses test
