@@ -20,6 +20,10 @@ public class Joueur extends Player {
     }
     
     public int proposition(int n,Cartes tapis){
+        if(n<this.getBlinde())
+        {
+            n=this.getBlinde();
+        }
         int nb=0;
         boolean continuer = true;
         Scanner sc = new Scanner(System.in);

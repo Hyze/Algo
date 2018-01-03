@@ -57,65 +57,73 @@ public class IA extends Player {
         {
             CarteAComparer.addCarte(tapis.getCarte(i));
         }
-        if(CarteAComparer.Paire()){
-           prob = 70;
-        }
-        if(CarteAComparer.DoublePaire()){
-            prob =75;
-        }
-        if(CarteAComparer.Brelan()){
-            prob =80;
-        }
-        if(CarteAComparer.Full()){
-            prob =95;
-        }
-        if(CarteAComparer.Carré()){
-            prob = 100;
-        }
-        if(CarteAComparer.Suite()){
-            prob =90;
-        }
-        if(CarteAComparer.Couleur()){
-            prob=80;
-        }
-        if(CarteAComparer.QuinteFlush())
-        {
-            prob=100;
-        }
-        if(CarteAComparer.QuinteFlushRoyal())
-        {
-            prob=100;
-        }
-        if(CarteAComparer.ProchePaire()){
-            prob+=20;
-        }
-        if(CarteAComparer.ProcheDoublePaire()){
-            prob+=10;
-        }
-        if(CarteAComparer.ProcheBrelan()){
-            prob+=15;
-        }
-        if(CarteAComparer.ProcheSuite()){
-            prob+=20;
-        }
-        if(CarteAComparer.ProcheCouleur3()){
-            prob+=15;
-        }
-        if(CarteAComparer.ProcheCouleur4()){
-            prob+=25;
-        }
-        if(CarteAComparer.ProcheFull()){
-            prob +=7;
 
-        }
-        if(CarteAComparer.ProcheCarre()){
-            prob+=5;
-        }
-        if(CarteAComparer.ProcheQuinteFlush()){
-            prob+=2;
-        }
-        if(CarteAComparer.ProcheQuinteFlushRoyale()){
-            prob+=1;
+        if(CarteAComparer.getTaille() >2) { // on commence par verifier les proche pour avoir un prob de base
+
+            if (CarteAComparer.ProchePaire()) {
+                prob += 20;
+            }
+            if (CarteAComparer.ProcheDoublePaire()) {
+                prob += 10;
+            }
+            if (CarteAComparer.ProcheBrelan()) {
+                prob += 15;
+            }
+            if (CarteAComparer.ProcheSuite()) {
+                prob += 20;
+            }
+            if (CarteAComparer.ProcheCouleur3()) {
+                prob += 15;
+            }
+            if (CarteAComparer.ProcheCouleur4()) {
+                prob += 25;
+            }
+            if (CarteAComparer.ProcheFull()) {
+                prob += 7;
+
+            }
+            if (CarteAComparer.ProcheCarre()) {
+                prob += 5;
+            }
+            if (CarteAComparer.ProcheQuinteFlush()) {
+                prob += 2;
+            }
+            if (CarteAComparer.ProcheQuinteFlushRoyale()) {
+                prob += 1;
+            }
+
+    // prob prend la valeur la plus basse au debut et verifie si on a mieux pour prendre une proba plus haute.
+            if (CarteAComparer.Paire()) {
+                prob = 70;
+            }
+            if (CarteAComparer.DoublePaire()) {
+                prob = 75;
+            }
+            if (CarteAComparer.Brelan()) {
+                prob = 80;
+            }
+
+            if (CarteAComparer.Couleur()) {
+                prob = 80;
+            }
+            if (CarteAComparer.Suite()) {
+                prob = 90;
+            }
+            if (CarteAComparer.Full()) {
+                prob = 95;
+            }
+            if (CarteAComparer.Carré()) {
+                prob = 100;
+            }
+            if (CarteAComparer.QuinteFlush()) {
+                prob = 100;
+            }
+            if (CarteAComparer.QuinteFlushRoyal()) {
+                prob = 100;
+            }
+
+        }else{  // au premier tour lorsque l'on a que 2 cartes en main , donc proba plus haut impossible
+            prob =90;
         }
         //a faire en utilisant la Class Cartes et ses test
         System.out.println("Calcul des chances de gagner avec actualisation des chances par combinaison");
@@ -128,7 +136,7 @@ public class IA extends Player {
         if (Decision == alea) {
             int unSurDeux = alea(0, 1);
             if (unSurDeux == 1) {
-                mise = 50;          // l'ia Relance de 50 parce qu'elle a des balls
+                mise = relance();           // l'ia Relance
                 Choix= true;
             }
         } else
@@ -137,9 +145,9 @@ public class IA extends Player {
                 mise= miseMax;
                 Choix=true;
             }
-                if(alea<mid && Decision<=100)
+                if(alea<mid && Decision<=100) // IA relance
                 {
-                    mise = 50;
+                    mise = relance();
                     Choix = true ;
                 }
 
@@ -154,10 +162,14 @@ public class IA extends Player {
     public int relance ()
     {
         int alea=alea(1,3);
-        if(alea==1)
+        if(alea==1 || alea==2)
         {
-            return 1/2*mise;
+            return 40 ; //petite relance
+        }else
+        {
+            return 70 ; // grosse relance
         }
+
     }
 
 
