@@ -12,9 +12,11 @@ import java.util.ArrayList;
  * @author tomskiev
  */
 public class IA extends Player {
-    final static String tabnom[] = {"johnny","arthur","paul","joe"}; 
+    final static String tabnom[] = {"johnny","arthur","paul","joe"};
+    private double prob = 0;
 
-    final static Cartes main = new Cartes();
+    //elle est dans la classe mere Player
+    //final static Cartes main = new Cartes();
     
     IA(ArrayList <Player> nom){
         super();
@@ -33,9 +35,9 @@ public class IA extends Player {
         
     }
     
-    public int proposition(int n){
+    public int proposition(int n, Cartes tapis){
         boolean b = true;
-       // calculeProba();
+        calculeProba(tapis);
         b = choix();
         if(b){
             return choixPari(n); 
@@ -45,8 +47,117 @@ public class IA extends Player {
         }
     }
 
+    public void calculeProba(Cartes tapis){
+
+        Cartes CarteAComparer= new Cartes();
+        for(int i = 0;i<this.getTailleMain(); i++) {
+            CarteAComparer.addCarte(this.getCarteMain(i));
+        }
+        for (int i=0;i<tapis.getTaille();i++)
+        {
+            CarteAComparer.addCarte(tapis.getCarte(i));
+        }
+        if(CarteAComparer.Paire()){
+           prob = 70;
+        }
+        if(CarteAComparer.DoublePaire()){
+            prob =75;
+        }
+        if(CarteAComparer.Brelan()){
+            prob =80;
+        }
+        if(CarteAComparer.Full()){
+            prob =95;
+        }
+        if(CarteAComparer.Carré()){
+            prob = 100;
+        }
+        if(CarteAComparer.Suite()){
+            prob =90;
+        }
+        if(CarteAComparer.Couleur()){
+            prob=80;
+        }
+        if(CarteAComparer.QuinteFlush())
+        {
+            prob=100;
+        }
+        if(CarteAComparer.QuinteFlushRoyal())
+        {
+            prob=100;
+        }
+        if(CarteAComparer.ProchePaire()){
+            prob+=20;
+        }
+        if(CarteAComparer.ProcheDoublePaire()){
+            prob+=10;
+        }
+        if(CarteAComparer.ProcheBrelan()){
+            prob+=15;
+        }
+        if(CarteAComparer.ProcheSuite()){
+            prob+=20;
+        }
+        if(CarteAComparer.ProcheCouleur3()){
+            prob+=15;
+        }
+        if(CarteAComparer.ProcheCouleur4()){
+            prob+=25;
+        }
+        if(CarteAComparer.ProcheFull()){
+            prob +=7;
+
+        }
+        if(CarteAComparer.ProcheCarre()){
+            prob+=5;
+        }
+        if(CarteAComparer.ProcheQuinteFlush()){
+            prob+=2;
+        }
+        if(CarteAComparer.ProcheQuinteFlushRoyale()){
+            prob+=1;
+        }
+        //a faire en utilisant la Class Cartes et ses test
+        System.out.println("Calcul des chances de gagner avec actualisation des chances par combinaison");
+    }
+    public boolean Rejouer()
+    {
+        double Decision=this.prob;
+        double alea = alea(0,100);
+        if(Decision==alea)
+        {
+            int unSurDeux= alea(0,1);
+            if(unSurDeux==1)
+            {
+                return true;
+            }
+            else {
+                return false;
+            }
+        }else {
+            if(alea < Decision && Decision<100 )
+            {
+                return true;
+            }   else
+
+            {
+                return false;
+            }
+        }
+
+    }
 
 
+    public int getTailleMain(){
+        return this.main.getTaille();
+    }
+    
+    public Carte getCarteMain(int i){
+        if(i>=0 && i<2)
+        return main.getCarte(i);
+        else
+        return null;
+    }
 
     
     public boolean choix(){
@@ -64,9 +175,9 @@ public class IA extends Player {
     }
     
     public boolean estJoueur(){
-        return true;
+        return false;
     }
     public boolean estIA(){
-        return false;
+        return true;
     }
 }

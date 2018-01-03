@@ -18,14 +18,14 @@ public abstract class Player {
     protected int mise;
     protected boolean Dealer;
     protected int argent;
-    protected Carte main[];
+    protected Cartes main;
     protected boolean Enjeu;
     
     Player(){
         this.mise = 0;
         this.Dealer = false;
         this.Enjeu = true;
-        this.main = new Carte[2];
+        this.main = new Cartes();
         this.argent = 1000;
     }
     
@@ -63,7 +63,7 @@ public abstract class Player {
             tab.addCarte(t.getCarte(j));
         }
         for(int j=0;j<2;j++){
-            tab.addCarte(this.main[j]);
+            tab.addCarte(this.main.getCarte(j));
         }
         //recuperation de toutes les cartes utiles pour le test
         
@@ -126,13 +126,13 @@ public abstract class Player {
         return i-1;
     }
     
-    public abstract int proposition(int n);
+    public abstract int proposition(int n,Cartes tapis);
     
     public void RecevoirCarte(Carte c,int n){
         System.out.println("Le joueur "+this.nom+" a comme "+(n+1)+"eme carte "+c);
         
         if(n>=0 && n<2)
-        main[n] = c;
+        main.addCarte(c);
     }
     
     

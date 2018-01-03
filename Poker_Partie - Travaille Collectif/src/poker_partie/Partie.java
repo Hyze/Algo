@@ -8,7 +8,7 @@ package poker_partie;
 import java.util.ArrayList;
 import java.util.HashMap;
 
-import static poker_partie.IA.main;
+//import static poker_partie.IA.main;
 
 /**
  *
@@ -193,12 +193,13 @@ public class Partie {
         int tmp;
         int valeur = 0; //au dealer plutot mais on verra apres            //on va comp les deux valeur la tmp et la valeur servant de témoin entre chaque tour de proposition
         int valeurTmp = valeur;
+        Cartes tapis = this.tapis;
         boolean continuer = true;
         do{
             if(valeur == 0){    //un tour de table obligatoire au debut
                 for(int i=0;i<this.tab.size();i++){
                     if(this.tab.get(i).estEnJeu()){ 
-                        tmp = this.tab.get(i).proposition(valeurTmp);
+                        tmp = this.tab.get(i).proposition(valeurTmp,tapis);
                         //se couche
                         if(tmp == -1){
                             this.tab.get(i).seCouche();
@@ -218,7 +219,7 @@ public class Partie {
             else{   //on regarde uniquement si les joueur on la mise qui est ajustée avec la mise actuelle
                 for(int i=0;i<this.tab.size();i++){
                     if(this.tab.get(i).estEnJeu() && this.tab.get(i).getMise() < valeurTmp){ 
-                        tmp = this.tab.get(i).proposition(valeurTmp);
+                        tmp = this.tab.get(i).proposition(valeurTmp,tapis);
                         //se couche
                         if(tmp == -1){
                             this.tab.get(i).seCouche();
@@ -246,91 +247,8 @@ public class Partie {
     }
 
 
-    public double calculeProba(){
-        double prob=0 ;
-        Cartes CarteAComparer= new Cartes();
-        for(int i = 0;i<main.getTaille(); i++) {
-       CarteAComparer.addCarte(main.getCarte(i));
-        }
-        for (int i=0;i<tapis.getTaille();i++)
-        {
-            CarteAComparer.addCarte(tapis.getCarte(i));
-        }
-        if(CarteAComparer.Paire()==true){
-            prob += 70;
-        }
-        if(CarteAComparer.DoublePaire()==true){
-            prob +=75;
-        }
-        if(CarteAComparer.Brelan()==true){
-            prob +=80;
-        }
-        if(CarteAComparer.Full()==true){
-            prob +=95;
-        }
-        if(CarteAComparer.Carré()==true){
-            prob += 100;
-        }
-        if(CarteAComparer.Suite()==true){
-            prob +=90;
-        }
-        if(CarteAComparer.Couleur()==true){
-            prob+=80;
-        }
-        if(CarteAComparer.QuinteFlush())
-        {
-            prob=100;
-        }
-        if(CarteAComparer.QuinteFlushRoyal())
-        {
-            prob=100;
-        }
-        if(CarteAComparer.ProchePaire()){
-            prob+=20;
-        }
-        if(CarteAComparer.ProcheDoublePaire()){
-            prob+=10;
-        }
-        if(CarteAComparer.ProcheBrelan()){
-            prob+=15;
-        }
-        if(CarteAComparer.ProcheSuite()){
-            prob+=20;
-        }
-        if(CarteAComparer.ProcheCouleur3()){
-            prob+=15;
-        }
-        if(CarteAComparer.ProcheCouleur4()){
-            prob+=25;
-        }
-        if(CarteAComparer.ProcheFull()){
-            prob +=7;
 
-        }
-        if(CarteAComparer.ProcheCarre()){
-            prob+=5;
-        }
-        if(CarteAComparer.ProcheQuinteFlush()){
-            prob+=2;
-        }
-        if(CarteAComparer.ProcheQuinteFlushRoyale()){
-            prob+=1;
-        }
-
-
-
-
-
-
-
-
-
-
-
-            //a faire en utilisant la Class Cartes et ses test
-            System.out.println("Calcul des chances de gagner avec actualisation des chances par combinaison");
-        return prob;
-    }
+    
         public int ProbRejouer(){
          return alea(0,100);
         }

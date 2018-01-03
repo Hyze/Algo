@@ -19,7 +19,7 @@ public class Joueur extends Player {
         this.nom = n;
     }
     
-    public int proposition(int n){
+    public int proposition(int n,Cartes tapis){
         int nb=0;
         boolean continuer = true;
         Scanner sc = new Scanner(System.in);
