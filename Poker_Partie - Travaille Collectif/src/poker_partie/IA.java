@@ -38,7 +38,7 @@ public class IA extends Player {
     public int proposition(int n, Cartes tapis){
         boolean b = true;
         calculeProba(tapis);
-        b = choix();
+        b = choix(this.mise);
         if(b){
             return choixPari(n); 
         }
@@ -120,35 +120,33 @@ public class IA extends Player {
         //a faire en utilisant la Class Cartes et ses test
         System.out.println("Calcul des chances de gagner avec actualisation des chances par combinaison");
     }
-    public boolean Rejouer() {
+    public boolean choix( int miseMax) {
+        boolean Choix = false;
         double Decision = this.prob;
         double alea = alea(0, 100);
         double mid = prob/2;
         if (Decision == alea) {
             int unSurDeux = alea(0, 1);
             if (unSurDeux == 1) {
-                mise = 50;
-                return true;
-            } else {
-                return false;
+                mise = 50;          // l'ia Relance de 50 parce qu'elle a des balls
+                Choix= true;
             }
-        } else {
-            if (mid <= alea && alea<Decision &&Decision <= 100) {
-                // suivre la mise en cours
-                return true;
-            } else {
-                return false;
+        } else
+            {
+            if (mid <= alea && alea<Decision &&Decision <= 100) { // l'ia suit la mise en cours
+                mise= miseMax;
+                Choix=true;
+            }
+                if(alea<mid && Decision<=100)
+                {
+
+                    Choix = true ;
+                }
+
+
             }
 
-        }
-        if(alea<mid && Decision<=100)
-        {
-            return true ;
-        }
-        else
-        {
-            return false;
-        }
+        return Choix;
 
     }
 
@@ -164,11 +162,6 @@ public class IA extends Player {
         return null;
     }
 
-    
-    public boolean choix(){
-        //a faire en utilisant la Class Cartes et ses test
-        return true;
-    }
     
     public String Choosenom(){
         return tabnom[alea(0,3)];

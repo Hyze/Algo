@@ -9,7 +9,7 @@ import java.util.ArrayList;
 
 /**
  *
- * @author tomskiev
+ * @author tomskiev/ Alex / Leo / MAttis mais il branle r .
  */
 public abstract class Player {
 //abstract pour utilisation du polymorphisme
@@ -20,7 +20,7 @@ public abstract class Player {
     protected int argent;
     protected Cartes main;
     protected boolean Enjeu;
-    protected int Blinde;
+
 
     final static int GROSSEBLINDE = 20 ;
     final static int PETITEBLINDE = 10 ;
@@ -36,8 +36,8 @@ public abstract class Player {
     //pour reprendre constructeur dans les classes filles avec super();
 
 
-    public void setBlinde(int blinde) {
-        Blinde = blinde;
+    public void setMise(int Mise) {
+        mise = Mise;
     }
 
     public void setDealer(boolean dealer) {

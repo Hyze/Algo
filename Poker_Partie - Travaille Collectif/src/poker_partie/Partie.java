@@ -64,8 +64,8 @@ public class Partie {
     private void gestionTour(){
         int cptBlinde=0;
         tab.get(cptBlinde).setDealer(true);
-        tab.get(cptBlinde+1).setBlinde(Player.PETITEBLINDE);
-    tab.get(cptBlinde+2).setBlinde(Player.GROSSEBLINDE);
+        tab.get(cptBlinde+1).setMise(Player.PETITEBLINDE);
+    tab.get(cptBlinde+2).setMise(Player.GROSSEBLINDE);
         switch(this.tour){
             //distribution des deux cartes et trois carte sur le tapis face retournées
             case 0:
@@ -74,7 +74,7 @@ public class Partie {
                 distribution();
                 gestionTapis();
                 //paris desactivé pour test
-                //paris();
+                paris();
             break;
             
             //on montre les cartes du tapis
@@ -197,7 +197,7 @@ public class Partie {
     
     private void paris(){
         int tmp;
-        int valeur = 0; //au dealer plutot mais on verra apres            //on va comp les deux valeur la tmp et la valeur servant de témoin entre chaque tour de proposition
+        int valeur = 0; //au dealer plutot mais on verra apres    ( je capte pas cette ligne )         //on va comp les deux valeur la tmp et la valeur servant de témoin entre chaque tour de proposition
         int valeurTmp = valeur;
         Cartes tapis = this.tapis;
         boolean continuer = true;
@@ -212,7 +212,7 @@ public class Partie {
                         }
                         //suit
                         else if(tmp == valeurTmp){
-                        
+                            InitMise();
                         }
                         //augmente
                         else if(tmp > valeurTmp){
@@ -255,7 +255,28 @@ public class Partie {
 
 
     
-        public int ProbRejouer(){
-         return alea(0,100);
+        public int MaxMise()
+        {
+            int max = tab.get(0).getMise();
+            for (int i = 0 ; i<tab.size();i++)
+            {
+                if(max<tab.get(i).getMise())
+                {
+                    max=tab.get(i).getMise();
+                }
+            }
+            return max;
+        }
+
+        public void InitMise()
+        {
+            for(int i=0;i<tab.size();i++)
+            {
+                if(tab.get(i).getMise()==Player.GROSSEBLINDE || tab.get(i).getMise()==Player.PETITEBLINDE)
+                {
+                    tab.get(i).setMise(tab.get(i).getMise());
+                }
+                tab.get(i).setMise(MaxMise());
+            }
         }
 }
