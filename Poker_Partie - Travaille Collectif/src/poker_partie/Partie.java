@@ -62,6 +62,10 @@ public class Partie {
     
     
     private void gestionTour(){
+        int cptBlinde=0;
+        tab.get(cptBlinde).setDealer(true);
+        tab.get(cptBlinde+1).setBlinde(Player.PETITEBLINDE);
+    tab.get(cptBlinde+2).setBlinde(Player.GROSSEBLINDE);
         switch(this.tour){
             //distribution des deux cartes et trois carte sur le tapis face retournées
             case 0:
@@ -94,13 +98,15 @@ public class Partie {
                 }
                 gestionTapis();
                 //paris desactivé pour test
-                //paris();
+                paris();
                 comparaison();
                 continuer = false;
+                cptBlinde++;
             break;    
         }
         if(this.tour != 3)
             this.tour++;
+
         
     }
     

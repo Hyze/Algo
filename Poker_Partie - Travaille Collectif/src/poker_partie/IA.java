@@ -120,29 +120,34 @@ public class IA extends Player {
         //a faire en utilisant la Class Cartes et ses test
         System.out.println("Calcul des chances de gagner avec actualisation des chances par combinaison");
     }
-    public boolean Rejouer()
-    {
-        double Decision=this.prob;
-        double alea = alea(0,100);
-        if(Decision==alea)
-        {
-            int unSurDeux= alea(0,1);
-            if(unSurDeux==1)
-            {
+    public boolean Rejouer() {
+        double Decision = this.prob;
+        double alea = alea(0, 100);
+        double mid = prob/2;
+        if (Decision == alea) {
+            int unSurDeux = alea(0, 1);
+            if (unSurDeux == 1) {
+                mise = 50;
                 return true;
-            }
-            else {
+            } else {
                 return false;
             }
-        }else {
-            if(alea < Decision && Decision<100 )
-            {
+        } else {
+            if (mid <= alea && alea<Decision &&Decision <= 100) {
+                // suivre la mise en cours
                 return true;
-            }   else
+            } else {
+                return false;
+            }
 
-            {
-                return false;
-            }
+        }
+        if(alea<mid && Decision<=100)
+        {
+            return true ;
+        }
+        else
+        {
+            return false;
         }
 
     }
