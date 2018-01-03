@@ -139,7 +139,7 @@ public class IA extends Player {
             }
                 if(alea<mid && Decision<=100)
                 {
-
+                    mise = 50;
                     Choix = true ;
                 }
 
@@ -148,6 +148,16 @@ public class IA extends Player {
 
         return Choix;
 
+    }
+
+
+    public int relance ()
+    {
+        int alea=alea(1,3);
+        if(alea==1)
+        {
+            return 1/2*mise;
+        }
     }
 
 
