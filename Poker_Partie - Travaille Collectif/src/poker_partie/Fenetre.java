@@ -100,7 +100,7 @@ public class Fenetre extends JFrame implements ActionListener
     }
     
     
-    public void ajoutCarteJoueur(Carte carte){
+    public void ajoutCarteJoueur(Carte carte,Graphics g){
         int x=0;
         int y=0;
         String nb = Integer.toString(carte.getNombre());
@@ -124,7 +124,7 @@ public class Fenetre extends JFrame implements ActionListener
             e.printStackTrace();
         }  
     }
-    public void ajoutCarteRiviere(Carte carte){
+    public void ajoutCarteRiviere(Carte carte,Graphics g){
         
         int x=0;
         int y=0;
