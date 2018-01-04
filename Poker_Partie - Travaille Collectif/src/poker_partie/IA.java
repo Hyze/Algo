@@ -35,7 +35,7 @@ public class IA extends Player {
         
     }
     
-    public int proposition(int n, Cartes tapis,Partie p){
+    public int proposition(int n, Cartes tapis){
         boolean b = true;
         //Cartes c = tapis.copie();
         calculeProba(tapis);
@@ -93,6 +93,19 @@ public class IA extends Player {
             }
 
     // prob prend la valeur la plus basse au debut et verifie si on a mieux pour prendre une proba plus haute.
+    if (CarteAComparer.Paire()) {
+                if(CarteAComparer.PaireChiffre() <10 && CarteAComparer.PaireChiffre()>= 6){
+                    prob=70;
+                }
+                if(CarteAComparer.PaireChiffre()>=10)
+                   {
+                    prob=80;
+                }
+                else
+                {
+                   prob=60;
+                }
+            }
             if (CarteAComparer.Paire()) {
                 prob = 70;
             }

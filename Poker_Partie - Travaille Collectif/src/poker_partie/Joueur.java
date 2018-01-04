@@ -19,7 +19,7 @@ public class Joueur extends Player {
         this.nom = n;
     }
     
-    public int proposition(int n,Cartes tapis,Partie p){
+      public int proposition(int n,Cartes tapis){
         /*if(n<this.getBlinde())
         {
             n=this.getBlinde();
@@ -34,12 +34,22 @@ public class Joueur extends Player {
         while(continuer){
         System.out.println("Les paris sont a "+n+"\nQue proposez vous ?");
         nb = Integer.parseInt(sc.nextLine());
+        if(nb==this.argent)
+        {
+            continuer=false;
+        }
+         if(nb>this.argent)
+            {
+                System.out.println("Vous ne possedez pas cette somme...");
+            }else{
             if((nb >= n && nb <= this.argent) || nb == -1){ //-1 pour se coucher
                 continuer = false;
             }
             else{
                 System.out.println("La somme doit etre superieur ou egal a "+n);
             }
+         }
+           
         }
         this.mise = nb;
         return nb;
