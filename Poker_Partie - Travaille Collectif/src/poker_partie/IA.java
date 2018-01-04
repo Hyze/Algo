@@ -35,12 +35,13 @@ public class IA extends Player {
         
     }
     
-    public int proposition(int n, Cartes tapis){
+    public int proposition(int n, Cartes tapis,Partie p){
         boolean b = true;
+        //Cartes c = tapis.copie();
         calculeProba(tapis);
         b = choix(this.mise);
         if(b){
-            return choixPari(n); 
+            return this.mise;
         }
         else{
             return -1;
@@ -59,7 +60,6 @@ public class IA extends Player {
         }
 
         if(CarteAComparer.getTaille() >2) { // on commence par verifier les proche pour avoir un prob de base
-
             if (CarteAComparer.ProchePaire()) {
                 prob += 20;
             }

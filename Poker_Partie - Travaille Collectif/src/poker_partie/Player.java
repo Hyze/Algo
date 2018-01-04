@@ -35,7 +35,14 @@ public abstract class Player {
 
     //pour reprendre constructeur dans les classes filles avec super();
 
-
+    public void setArgent(int n){
+        argent += n;
+    }
+    
+    public int getArgent(){
+        return this.argent;
+    }
+    
     public void setMise(int mise) {
         this.mise = mise;
     }
@@ -71,14 +78,19 @@ public abstract class Player {
 
     public void seCouche(){
         this.mise = 0;  //pour reinit la mise entre chaque tour mais peut etre a la fin
+        System.out.println("Le joueur "+this.getNom()+" se couche.");
         this.Enjeu = false;
     }
+    public void seReleve(){
+        this.Enjeu = true;
+    }
+    
 
     public int getMise(){
         return this.mise;
     }
 
-    public int meilleurCombinaison(Carte c,Cartes t){
+    public int meilleurCombinaison(ArrayList <Carte> c,Cartes t){
         Cartes tab = new Cartes();
         for(int j=0;j<t.getTaille();j++){
             tab.addCarte(t.getCarte(j));
@@ -87,6 +99,7 @@ public abstract class Player {
             tab.addCarte(this.main.getCarte(j));
         }
         //recuperation de toutes les cartes utiles pour le test
+        //attention aussi on type de verif avec carte haute meme pour une autre combi a voir
 
         boolean continuer = true;
         int i=0;
@@ -96,58 +109,82 @@ public abstract class Player {
                 //quinte flush royale
                 case 0:
                     b = tab.QuinteFlushRoyal();
+                    c.add(new Carte(14,tab.CouleurNom()));
                     break;
 
                 //quinte flush
                 case 1:
                     b = tab.QuinteFlush();
+                    c.remove(0);
+                    c.add(tab.SuiteHaute());
                     break;
                 //carré
                 case 2:
                     b = tab.Carré();
+                    c.remove(0);
+                    //quand carré la couleur n'importe pas car il les a toute dans combinaison
+                    c.add(new Carte(tab.CarréChiffre(),"Coeur"));
                     break;
                 //full
                 case 3:
                     b = tab.Full();
+                    c.remove(0);
+                    //a verif ordre de comp
+                    c.add(new Carte(tab.BrelanChiffre(),"Coeur"));
                     break;
 
                 //couleur ou flush
                 case 4:
                     b = tab.Couleur();
+                    c.remove(0);
+                    c.add(new Carte(tab.CarteHauteCouleur(),tab.CouleurNom()));
                     break;
 
                 //quinte ou suite
                 case 5:
                     b = tab.Suite();
+                    c.remove(0);
+                    c.add(tab.SuiteHaute());
                     break;
 
                 //brelan
                 case 6:
                     b = tab.Brelan();
+                    c.remove(0);
+                    //encore une fois la couleur n'est pas un facteur important dans cette cominaison
+                    c.add(new Carte(tab.BrelanChiffre(),"Coeur"));
                     break;
 
                 //double pairs
                 case 7:
                     b =  tab.DoublePaire();
+                    c.remove(0);
+                    //pareil couleur peu importante
+                    c.add(new Carte(tab.DoublePaireChiffre(),"Coeur"));
                     break;
 
                 //paires
                 case 8:
                     b = tab.Paire();
+                    c.remove(0);
+                    c.add(new Carte(tab.PaireChiffre(),"Coeur"));
                     break;
 
                 //carte haute
                 case 9:
                     b = true;
+                    c.remove(0);
+                    c.add(new Carte(tab.CarteHaute(),"Coeur"));
                     break;
 
             }
             i++;
         }while(!b);
+        //System.out.println("c est de "+c.get(0));
         return i-1;
     }
 
-    public abstract int proposition(int n,Cartes tapis);
+    public abstract int proposition(int n,Cartes tapis,Partie p);
 
     public void RecevoirCarte(Carte c,int n){
         System.out.println("Le joueur "+this.nom+" a comme "+(n+1)+"eme carte "+c);

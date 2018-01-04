@@ -33,18 +33,15 @@ public class Poker_Partie {
         String tmp;
         int t=0;
         
-        nom.add("John");
-        nom.add("Battou");
-        
+        //nom.add("John");
+        //nom.add("Battou");
+        nom.add("Batman");
+        nom.add("Joker");
         //pour tester resultat particulier
-        while(continuer){
-         Partie p = new Partie(0,nom);
-         if(p.resultat != 1)
-             continuer = true;
-         else
-             continuer = false;
-        }
-         
+        /*while(continuer){
+         Partie p = new Partie(2,nom);
+        }*/
+        Poker p = new Poker();
     }
     
     

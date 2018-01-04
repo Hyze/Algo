@@ -19,15 +19,16 @@ public class Joueur extends Player {
         this.nom = n;
     }
     
-    public int proposition(int n,Cartes tapis){
-        if(n<this.getBlinde())
+    public int proposition(int n,Cartes tapis,Partie p){
+        /*if(n<this.getBlinde())
         {
             n=this.getBlinde();
-        }
+        }*/
         int nb=0;
         boolean continuer = true;
         Scanner sc = new Scanner(System.in);
         String s;
+        
         System.out.println("Tour de "+this.nom);
         //on etoffera ca un peu plus tard
         while(continuer){

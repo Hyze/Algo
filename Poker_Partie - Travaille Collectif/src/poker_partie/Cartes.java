@@ -18,9 +18,9 @@ public class Cartes {
         tab = new ArrayList();
     }
     
-    public Carte getCarte(int i){
-        if(i<tab.size() && i>=0)
-        return this.tab.get(i);
+    public Carte getCarte(int n){
+        if(n<tab.size() && n>=0)
+        return this.tab.get(n);
         else
             return null;
     }
@@ -28,6 +28,7 @@ public class Cartes {
         Cartes tmp = new Cartes();
         for(int i=0;i<this.tab.size();i++){
             tmp.addCarte(new Carte(this.getCarte(i).getNombre(),this.getCarte(i).getCouleur()));
+            //System.out.println(tmp.getCarte(i));
         }
         return tmp;
     }
@@ -52,13 +53,23 @@ public class Cartes {
     }
     
     public int CarteHaute(){
-        int max = this.getCarte(0).getNombre();
+        int max = 0;
         int indice = 0;
         for(int i=0;i<this.getTaille();i++){
             if(max < this.getCarte(i).getNombre()){
                 max = this.getCarte(i).getNombre();
                 indice = i;
             }
+        }
+        return max;
+    }
+    
+    public int CarteHauteCouleur(){
+        String c = this.CouleurNom();
+        int max = 0;
+        for(int i=0;i<this.getTaille();i++){
+            if(max < this.getCarte(i).getNombre() && this.getCarte(i).getCouleur() == c)
+                max = this.getCarte(i).getNombre();
         }
         return max;
     }
@@ -161,7 +172,7 @@ public class Cartes {
         int cpt=0;
         boolean bool=false;
         Cartes p= this.tri();
-        for (int i=0;i<p.getTaille();i++)
+        for (int i=0;i<p.getTaille()-1;i++)
         {
             if(p.getCarte(i).getCouleur().equals(p.getCarte(i+1).getCouleur()))
             {
@@ -180,7 +191,7 @@ public class Cartes {
         int cpt=0;
         boolean bool=false;
         Cartes p= this.tri();
-        for (int i=0;i<p.getTaille();i++)
+        for (int i=0;i<p.getTaille()-1;i++)
         {
             if(p.getCarte(i).getCouleur().equals(p.getCarte(i+1).getCouleur()))
             {
@@ -200,6 +211,12 @@ public class Cartes {
         boolean b = false;
         int cmpt = 0;
         Cartes p = this.tri();
+        /*System.out.println("Taille de tab est de "+tab.size());
+        for(int i=0;i<this.tab.size();i++){
+            System.out.println("La carte est "+this.tab.get(i));
+        }*/
+        
+        
         for(int i=0;i<p.getTaille()-1;i++){
             if(p.getCarte(i).getNombre() == p.getCarte(i+1).getNombre()){
                 cmpt++;
@@ -324,18 +341,22 @@ public class Cartes {
             return tab;
     }
     
+    
+    public int DoublePaireChiffre(){
+        int [] res = this.DoublePaireTab();
+        //System.out.println(res[0]+" et "+res[1]);
+        return res[0] > res [1] ? res[0] : res[1];
+    }
+    
+    
+    
     public boolean ProcheDoublePaire()
     {
-        Cartes p = this.tri();
-        if(p.Paire())
-        {
-            return true;
-        }
-        else
-        {
-            return false;
-        }
+        //Cartes p = this.tri();
+        //a verifier car pb acvec pointeur null
+        return this.Paire();
     }
+    
     public boolean Brelan(){
          boolean b = false;
         int cmpt = 0;
@@ -591,7 +612,7 @@ public class Cartes {
     public boolean ProcheSuite()
     {   boolean result=false;
         Cartes p = this.tri();
-        for(int i=p.getTaille()-1;i>0;i--)
+        for(int i=p.getTaille()-1;i>3;i--)
         {
             if(p.getCarte(i).getNombre()==p.getCarte(i-1).getNombre()+1 && p.getCarte(i-1).getNombre()+1==p.getCarte(i-2).getNombre()+1 && p.getCarte(i-2).getNombre()+1==p.getCarte(i-3).getNombre()+1)
             {
@@ -758,14 +779,13 @@ public class Cartes {
         Cartes p = this.tri();
         int i=0;
         boolean trouver = false;
-        while (i<p.getTaille() && p.getCarte(i).getNombre()!=num)
+        while (i<p.getTaille() && !trouver)
         {
-            i++;
             if(p.getCarte(i).getNombre()==num)
             {
                 trouver=true;
             }
-
+            i++;
         }
         return trouver;
     }
